@@ -2,6 +2,8 @@ package com.nk.flyboy.web.controller;
 
 import com.nk.flyboy.core.action.user.UserInfoAction;
 import com.nk.flyboy.model.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +19,15 @@ import java.util.Map;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    private Logger logger= LoggerFactory.getLogger(UserController.class);
+
     @Resource
     private UserInfoAction userInfoAction;
 
     @RequestMapping(value = "/userinfo")
     public String userInfo(ModelMap model){
+
+        logger.info("logger for controller");
 
 /*        model.addAttribute("name", "xiaoming");
         model.addAttribute("age", 18);
