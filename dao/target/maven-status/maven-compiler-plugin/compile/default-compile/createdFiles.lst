@@ -1,0 +1,4 @@
+com\nk\flyboy\model\Member.class
+com\nk\flyboy\jdbc\BaseMapper.class
+com\nk\flyboy\dao\UserInfoDao.class
+com\nk\flyboy\dao\mapper\UserInfoMapper.class
