@@ -1,5 +1,6 @@
 package com.nk.flyboy.core.action.user;
 
+import com.nk.flyboy.core.service.UserInfoService;
 import com.nk.flyboy.dao.UserInfoDao;
 import com.nk.flyboy.model.Member;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,11 @@ import java.util.Map;
 public class UserInfoAction {
 
     @Resource
-    private UserInfoDao userInfoDao;
+    private UserInfoService userInfoService;
 
     public List<Member> execute(){
 
-        List<Member> list=userInfoDao.getMemberList();
+        List<Member> list=userInfoService.getMemberList();
 
         return list;
 

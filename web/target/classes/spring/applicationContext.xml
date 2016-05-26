@@ -18,6 +18,9 @@
               <property name="suffix" value=".jsp"></property>
        </bean>
 
+       <!--静态资源配置-->
+       <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>
+
        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
               <property name="locations">
                      <list>
