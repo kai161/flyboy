@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * Created by cheris on 2016/5/26.
  */
-@Component
+//@Component
 public class SchedulTestJob {
 
     private Logger logger= LoggerFactory.getLogger(SchedulTestJob.class);

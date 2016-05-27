@@ -8,11 +8,7 @@
  <h1>用户信息</h1>
  <div>
     <c:forEach items="${list}" var="element">
-        <p>${element.username}</p>
-        <p>${element.password}</p>
-        <p>${element.name}</p>
-        <p>${element.mobile}</p>
-        <p>${element.email}</p>
+        <p>${element.id} - ${element.username} - ${element.password} - ${element.name} - ${element.mobile} - ${element.email} - ${element.referred_count} - ${element.create_time}   </p>
     </c:forEach>
 
  </div>

@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class Member {
 
+    public Integer id;
+
     public String username;
 
     public String password;
@@ -22,6 +24,10 @@ public class Member {
     public String mobile;
 
     public String email;
+
+    public BigDecimal referred_count;
+
+    public LocalDateTime create_time;
 
     public String getUsername() {
         return username;
@@ -64,5 +70,27 @@ public class Member {
         this.name = name;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public BigDecimal getReferred_count() {
+        return referred_count;
+    }
+
+    public void setReferred_count(BigDecimal referred_count) {
+        this.referred_count = referred_count;
+    }
+
+    public LocalDateTime getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(LocalDateTime create_time) {
+        this.create_time = create_time;
+    }
 }

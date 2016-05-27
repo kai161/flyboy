@@ -32,13 +32,12 @@ public class UserInfoDao {
     public List<Member> getMemberList(){
 
         List<Member> list=new ArrayList<Member>();
-/*
         jdbcTemplate=new JdbcTemplate(dataSource);
         String sql="select * from member";
         //Member member=new Member();
-        list=jdbcTemplate.query(sql,new BaseMapper<Member>(new Member()));*/
+        list=jdbcTemplate.query(sql,new BaseMapper<Member>(new Member()));
 
-        list=userInfoMapper.getMemberList();
+        //list=userInfoMapper.getMemberList();
 
 
         return list;
