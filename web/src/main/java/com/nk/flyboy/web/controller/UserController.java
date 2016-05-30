@@ -2,6 +2,7 @@ package com.nk.flyboy.web.controller;
 
 import com.nk.flyboy.core.action.user.UserInfoAction;
 import com.nk.flyboy.model.Member;
+import com.nk.flyboy.web.annotation.SqlFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class UserController {
     @Resource
     private UserInfoAction userInfoAction;
 
+    @SqlFilter
     @RequestMapping(value = "/userinfo")
     public String userInfo(ModelMap model){
 

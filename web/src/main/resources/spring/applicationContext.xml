@@ -54,4 +54,8 @@
        <task:annotation-driven scheduler="flyboyjob" mode="proxy"></task:annotation-driven>
        <task:scheduler id="flyboyjob" pool-size="6"></task:scheduler>
 
+       <mvc:interceptors>
+              <bean class="com.nk.flyboy.web.interceptor.SqlFilterInterceptor"></bean>
+       </mvc:interceptors>
+
 </beans>
