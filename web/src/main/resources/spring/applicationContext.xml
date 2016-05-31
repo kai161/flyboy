@@ -4,13 +4,16 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        	             http://www.springframework.org/schema/mvc
 	                 http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	                 http://www.springframework.org/schema/context
 	                 http://www.springframework.org/schema/context/spring-context.xsd
 	                 http://www.springframework.org/schema/task
-	                 http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	                 http://www.springframework.org/schema/task/spring-task.xsd
+	                 http://www.springframework.org/schema/cache
+	                 http://www.springframework.org/schema/cache/spring-cache.xsd
        ">
 
        <context:component-scan base-package="com.nk.flyboy"></context:component-scan>
@@ -54,8 +57,18 @@
        <task:annotation-driven scheduler="flyboyjob" mode="proxy"></task:annotation-driven>
        <task:scheduler id="flyboyjob" pool-size="6"></task:scheduler>
 
+       <!--添加过滤器-->
        <mvc:interceptors>
               <bean class="com.nk.flyboy.web.interceptor.SqlFilterInterceptor"></bean>
        </mvc:interceptors>
+
+       <!--配置Spring-EhCache-->
+       <cache:annotation-driven cache-manager="cacheManager" ></cache:annotation-driven>
+       <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+              <property name="cacheManager" ref="cacheManagerFactory"></property>
+       </bean>
+       <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+              <property name="configLocation" value="classpath:ehcache.xml"></property>
+       </bean>
 
 </beans>

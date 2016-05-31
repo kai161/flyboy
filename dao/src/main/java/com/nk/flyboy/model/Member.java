@@ -3,6 +3,7 @@ package com.nk.flyboy.model;
 
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Member {
+public class Member implements Serializable {
 
     public Integer id;
 
