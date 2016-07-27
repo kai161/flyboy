@@ -1,5 +1,7 @@
 package com.nk.flyboy.core.action.user;
 
+import com.nk.flyboy.core.service.Test1;
+import com.nk.flyboy.core.service.Test2;
 import com.nk.flyboy.core.service.UserInfoService;
 import com.nk.flyboy.dao.UserInfoDao;
 import com.nk.flyboy.model.Member;

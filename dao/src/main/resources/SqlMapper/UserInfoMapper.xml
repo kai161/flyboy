@@ -4,6 +4,62 @@
     <resultMap id="memberMap" type="Member"></resultMap>
 
     <select id="getMemberList" resultMap="memberMap">
-        select * from member
+        select * from tbl_member where mobile='13520210885'
     </select>
+
+    <!-- 新增会员信息 -->
+    <insert id="insertMember" parameterType="Member">
+        <selectKey resultType="String" order="BEFORE" keyProperty="id">
+            SELECT sys_guid() from DUAL
+        </selectKey>
+        INSERT INTO TBL_MEMBER(
+        id,
+        member_number,
+        real_name,
+        sex,
+        age,
+        mobile,
+        mobile_status,
+        id_card,
+        id_card_status,
+        status,
+        email,
+        email_status,
+        referrer,
+        refer_count,
+        province,
+        city,
+        register_ip,
+        client,
+        create_time,
+        update_time,
+        trade_password,
+        channel_code,
+        channel_name
+        ) VALUES(
+        #{id},
+        SEQ_MEMBER.nextval,
+        #{realName,jdbcType=VARCHAR},
+        #{sex,jdbcType=VARCHAR},
+        #{age,jdbcType=NUMERIC},
+        #{mobile,jdbcType=VARCHAR},
+        #{mobileStatus,jdbcType=VARCHAR},
+        #{idCard,jdbcType=VARCHAR},
+        #{idCardStatus,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{emailStatus,jdbcType=VARCHAR},
+        #{referrer,jdbcType=VARCHAR},
+        #{referCount,jdbcType=NUMERIC},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR},
+        #{registerIp,jdbcType=VARCHAR},
+        #{client,jdbcType=VARCHAR},
+        sysdate,
+        sysdate,
+        #{tradePassword,jdbcType=VARCHAR},
+        #{channelCode,jdbcType=NUMERIC},
+        #{channelName,jdbcType=VARCHAR},
+        )
+    </insert>
 </mapper>

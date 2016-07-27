@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserInfoMapper {
 
     public List<Member> getMemberList();
+
+    public void insert(Member member);
 }

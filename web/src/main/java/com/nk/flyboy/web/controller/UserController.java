@@ -1,5 +1,6 @@
 package com.nk.flyboy.web.controller;
 
+import com.nk.flyboy.core.action.user.TestAction;
 import com.nk.flyboy.core.action.user.UserInfoAction;
 import com.nk.flyboy.model.Member;
 import com.nk.flyboy.web.annotation.SqlFilter;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,6 +26,8 @@ public class UserController {
 
     @Resource
     private UserInfoAction userInfoAction;
+    @Resource
+    private TestAction testAction;
 
     @SqlFilter
     @RequestMapping(value = "/userinfo")
@@ -38,6 +42,15 @@ public class UserController {
         List<Member> list=userInfoAction.execute();
         model.addAttribute("list",list);
         return "userInfo";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "test")
+    public String test(){
+
+        testAction.execute();
+
+        return "ok";
     }
 
 }

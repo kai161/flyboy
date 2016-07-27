@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.3.0.xsd" updateCheck="true"
+         monitoring="autodetect" dynamicConfig="true">
+
+
+    <!--       配置自定义缓存
+            maxElementsInMemory：缓存中允许创建的最大对象数
+            eternal：缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期。
+            timeToIdleSeconds：缓存数据的钝化时间，也就是在一个元素消亡之前，
+                        两次访问时间的最大时间间隔值，这只能在元素不是永久驻留时有效，
+                        如果该值是 0 就意味着元素可以停顿无穷长的时间。
+            timeToLiveSeconds：缓存数据的生存时间，也就是一个元素从构建到消亡的最大时间间隔值，
+                        这只能在元素不是永久驻留时有效，如果该值是0就意味着元素可以停顿无穷长的时间。
+            overflowToDisk：内存不足时，是否启用磁盘缓存。
+            memoryStoreEvictionPolicy：缓存满了之后的淘汰算法-->
+
+    <!--指定缓存文件目录-->
+    <diskStore path="E:/cachetmpdir"/>
+
+    <defaultCache maxElementsInMemory="10000" eternal="false"
+                  timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+                  maxElementsOnDisk="10000000" diskPersistent="false"
+                  diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+    <cache name="myCache" maxElementsInMemory="10000" eternal="false"
+           timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+           maxElementsOnDisk="10000000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+        <!--配置RMI集群模式-->
+        <!--<cacheEventListenerFactory
+                       class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                       properties="replicateAsynchronously=true,
+               replicatePuts=true,
+               replicateUpdates=true,
+               replicateUpdatesViaCopy=false,
+           replicateRemovals=true "/>-->
+    </cache>
+
+    <!--配置RMI集群模式 通过多播（ multicast ）来维护集群中的所有有效节点，指定节点发现模式 peerDiscovery 值为 automatic 自动；同时组播地址可以指定 D 类 IP 地址空间，范围从 10.0.0.1 到 10.255.255.255 中的任何一个地址-->
+    <!--    <cacheManagerPeerProviderFactory
+                class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+                properties="peerDiscovery=automatic, multicastGroupAddress=231.12.21.132,
+        multicastGroupPort=4446, timeToLive=32"
+                />-->
+</ehcache>
+

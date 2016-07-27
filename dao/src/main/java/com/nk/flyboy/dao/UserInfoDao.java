@@ -63,4 +63,8 @@ public class UserInfoDao {
         return list;
     }
 
+    public void insert(Member member){
+        userInfoMapper.insert(member);
+    }
+
 }

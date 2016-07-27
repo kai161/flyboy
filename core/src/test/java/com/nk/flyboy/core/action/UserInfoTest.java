@@ -20,6 +20,7 @@ public class UserInfoTest {
     @Injectable
     private UserInfoService userInfoService;
 
+
     @Test
     public void test(){
 

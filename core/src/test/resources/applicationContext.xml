@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xmlns:cache="http://www.springframework.org/schema/cache"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+        <context:component-scan base-package="com.nk.flyboy"></context:component-scan>
+
+
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+                <property name="locations">
+                        <list>
+                                <value>classpath*:jdbc.properties</value>
+                        </list>
+                </property>
+        </bean>
+
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+                <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+        </bean>
+
+
+        <!--配置mybatis-->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+                <property name="basePackage" value="com.nk.flyboy.dao.mapper"></property>
+        </bean>
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+                <property name="dataSource" ref="dataSource"></property>
+                <property name="configLocation" value="classpath:MyBatis-Configuration.xml"></property>
+                <property name="mapperLocations" value="classpath:SqlMapper/*.xml"></property>
+        </bean>
+
+
+        <cache:annotation-driven cache-manager="cacheManager" ></cache:annotation-driven>
+        <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+                <property name="cacheManager" ref="cacheManagerFactory"></property>
+        </bean>
+        <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+                <property name="configLocation" value="classpath:ehcache.xml"></property>
+        </bean>
+
+
+        <!--添加事务-->
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+                <property name="dataSource" ref="dataSource"></property>
+        </bean>
+        <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+
+
+</beans>
