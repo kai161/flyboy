@@ -35,7 +35,9 @@ public class UserController {
 
         List<Member> list=userInfoAction.execute();
         model.addAttribute("list",list);
+        
         return "userInfo";
+
     }
 
 }
