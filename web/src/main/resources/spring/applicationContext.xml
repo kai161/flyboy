@@ -24,8 +24,9 @@
               <property name="suffix" value=".jsp"></property>
        </bean>
 
-       <!--静态资源配置-->
+       <!--静态资源配置 注意在使用Interceptor时，访问静态资源的Handler会变成ResourceHttpRequestHandler-->
        <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>
+       <mvc:resources mapping="/cometHtml/**" location="/WEB-INF/views/cometHtml/"></mvc:resources>
 
        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
               <property name="locations">

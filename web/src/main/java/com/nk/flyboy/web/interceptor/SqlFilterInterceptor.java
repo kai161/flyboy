@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,10 @@ public class SqlFilterInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        //静态资源的访问不验证
+        if(handler instanceof ResourceHttpRequestHandler){
+            return true;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Annotation classAnnotation = handlerMethod.getBean().getClass().getAnnotation(SqlFilter.class);
         logger.debug("begin SqlFilterInterceptor.....");
