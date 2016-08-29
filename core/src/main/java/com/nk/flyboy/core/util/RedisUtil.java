@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.HyperLogLogOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -699,6 +700,59 @@ public class RedisUtil {
         }catch (Exception e){
             e.printStackTrace();
             logger.error("zUnionStore key {} otherKey {} destKey {} error {}",key,otherKey,destKey,e.getMessage());
+        }
+        return result;
+    }
+
+    /*
+    *将任意数量的元素添加到指定的 HyperLogLog 里面。
+    * HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定 的、并且是很小的。
+    * 每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基 数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。
+    * 什么是基数：比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 基数(不重复元素)为5。 基数估计就是在误差可接受的范围内
+    */
+    public boolean pfAdd(RedisTemplate redisTemplate,Object key,Object...values){
+        boolean result=false;
+        try{
+            HyperLogLogOperations operations=redisTemplate.opsForHyperLogLog();
+            operations.add(key,values);
+            result=true;
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("pfAdd key {} values {} error{}",key, values.toString(),e.getMessage());
+        }
+        return result;
+    }
+
+    /*
+    *当 PFCOUNT 命令作用于单个键时， 返回储存在给定键的 HyperLogLog 的近似基数， 如果键不存在， 那么返回 0 。
+
+    *当 PFCOUNT 命令作用于多个键时， 返回所有给定 HyperLogLog 的并集的近似基数， 这个近似基数是通过将所有给定 HyperLogLog 合并至一个临时 HyperLogLog 来计算得出的。
+    */
+    public Long pfCount(RedisTemplate redisTemplate,Object... keys){
+        Long result=0L;
+        try{
+            HyperLogLogOperations operations=redisTemplate.opsForHyperLogLog();
+            result=operations.size(keys);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("pfCount key {}  error {}",keys.toString(),e.getMessage());
+        }
+        return result;
+    }
+
+    /*
+    *将多个 HyperLogLog 合并（merge）为一个 HyperLogLog ， 合并后的 HyperLogLog 的基数接近于所有输入 HyperLogLog 的可见集合（observed set）的并集。
+    * 合并得出的 HyperLogLog 会被储存在 destkey 键里面， 如果该键并不存在， 那么命令在执行之前， 会先为该键创建一个空的 HyperLogLog 
+    */
+    public boolean pfMerge(RedisTemplate redisTemplate, Object destKey,Object... keys){
+        boolean result=false;
+        try{
+            HyperLogLogOperations operations=redisTemplate.opsForHyperLogLog();
+            operations.union(destKey,keys);
+            result=true;
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("pfAdd key {} destKey {} error{}",keys.toString(), destKey.toString(),e.getMessage());
         }
         return result;
     }
