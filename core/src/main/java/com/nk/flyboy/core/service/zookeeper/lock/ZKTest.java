@@ -1,11 +1,14 @@
 package com.nk.flyboy.core.service.zookeeper.lock;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * Created by cheris on 2016/9/5.
  */
 public class ZKTest {
 
     public static void main(String[] arg) throws InterruptedException {
+
         Runnable task1=new Runnable() {
             public void run() {
                 DistributedLock lock=null;

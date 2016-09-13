@@ -32,6 +32,8 @@ public class ConcurrentTest {
 
         doneSignal=new CountDownLatch(tasks.length);
 
+        start();
+
     }
 
     public void start(){
@@ -88,5 +90,6 @@ public class ConcurrentTest {
         System.out.println("avg :"+avg);
         System.out.println("err :"+ err.get());
     }
+
 
 }
