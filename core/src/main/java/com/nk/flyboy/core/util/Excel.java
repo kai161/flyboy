@@ -108,49 +108,15 @@ public class Excel{
 
     private static <T>List<T> readXLSX(Class<T> c,String path) throws IOException, IllegalAccessException, InstantiationException, NoSuchFieldException, OpenXML4JException, ParserConfigurationException, SAXException {
         List<T> result=new ArrayList<T>();
-       /* //InputStream inputStream=new FileInputStream(path);
-        OPCPackage pkg = OPCPackage.open(path);
-        XSSFWorkbook xssfWorkbook=new XSSFWorkbook(pkg);
-
-        for (int index=0;index<xssfWorkbook.getNumberOfSheets();index++){
-            XSSFSheet xssfSheet=xssfWorkbook.getSheetAt(index);
-            if(xssfSheet==null){
-                continue;
-            }
-            Map<Integer,String> columes=new  HashMap();
-
-            Field[] fields=c.getFields();
-            Field field2=c.getField("amount");
-            int fieldsLength= c.getDeclaredFields().length;
-            int sheetColumes=xssfSheet.getPhysicalNumberOfRows();
-            int loopColumes=fieldsLength>sheetColumes?sheetColumes:fieldsLength;
-
-            for(int rowNum=0;rowNum<=xssfSheet.getLastRowNum();rowNum++){
-                XSSFRow xssfRow=xssfSheet.getRow(rowNum);
-                if(xssfRow!=null){
-                    if(rowNum==0){
-                        for(int j=0;j<loopColumes;j++) {
-                            columes.put(j, xssfRow.getCell(j).toString());
-                        }
-                        continue;
-                    }
-                    T t=c.newInstance();
-                    for(int j=0;j<loopColumes;j++){
-                        Field field= c.getDeclaredField(columes.get(j));
-                        field.setAccessible(true);
-                        field.set(t,getCellValue(xssfRow.getCell(j)));
-                    }
-                    result.add(t);
-                }
-            }
-        }
-
-        pkg.close();*/
+        long before=System.currentTimeMillis();
         feildLength=c.getDeclaredFields().length;
-        OPCPackage p=OPCPackage.open(new File("D:\\test2.xlsx"), PackageAccess.READ);
-        XlSX2CSV xlSX2CSV=new XlSX2CSV(p,0);
+        OPCPackage p=OPCPackage.open(new File(path), PackageAccess.READ);
+        XlSX2CSV xlSX2CSV=new XlSX2CSV(p);
         result= xlSX2CSV.process(c);
         p.close();
+        long end=System.currentTimeMillis();
+
+        System.out.println(end-before);
         return result;
     }
 
@@ -279,9 +245,6 @@ public class Excel{
                 if(currentCol>=feildLength){
                     return;
                 }
-                if(currentRow>80171){
-                    System.out.println(currentRow);
-                }
 
                 if(cellReference==null){
                     cellReference=new CellAddress(currentRow,currentCol).formatAsString();
@@ -315,12 +278,8 @@ public class Excel{
 
         private final OPCPackage xlsxPackage;
 
-        private final int minColumns;
-
-
-        public XlSX2CSV(OPCPackage pkg,int minColumns){
+        public XlSX2CSV(OPCPackage pkg){
             this.xlsxPackage=pkg;
-            this.minColumns=minColumns;
         }
 
         public <T>List<T> processSheet(StylesTable stylesTable,ReadOnlySharedStringsTable readOnlySharedStringsTable,MyHander sheetContentsHandler,
