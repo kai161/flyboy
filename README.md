@@ -5,4 +5,4 @@
 3. 添加一个定时任务
 4. 添加防Sql注入过滤器
 5. 集成EhCache缓存框架
-6. core中添加util，支持Excel的读取
+6. core中添加util，支持Excel的读取和映射成对象
