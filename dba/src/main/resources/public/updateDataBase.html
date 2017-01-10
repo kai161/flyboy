@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    更新数据库？<a id="yes" href="javascript:void(0)">yes</a>
+
+<script type="application/javascript">
+
+    $(function(){
+
+        $("#yes").click(function(){
+            $.ajax({
+                url:"/update",
+                type:"GET",
+                success:function(data){
+                    if(data=="success"){
+                        alert(data);
+                    }else{
+                        alert("faile")
+                    }
+                }
+            })
+        });
+
+    });
+
+</script>
+</body>
+</html>

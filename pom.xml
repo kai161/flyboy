@@ -12,6 +12,7 @@
         <module>core</module>
         <module>dao</module>
         <module>web</module>
+        <module>dba</module>
     </modules>
     <properties>
         <spring.version>4.2.4.RELEASE</spring.version>
@@ -47,6 +48,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>8.5.9</version>
         </dependency>
 
         <dependency>
