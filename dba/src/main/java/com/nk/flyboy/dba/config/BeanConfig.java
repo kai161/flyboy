@@ -45,7 +45,7 @@ public class BeanConfig {
         WebMvcConfigurer webMvcConfigurer=new WebMvcConfigurerAdapter() {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**").excludePathPatterns("/index.html");
+                registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/*").excludePathPatterns("/index.html");
             }
         };
         return webMvcConfigurer;
