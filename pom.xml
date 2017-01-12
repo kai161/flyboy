@@ -13,6 +13,7 @@
         <module>dao</module>
         <module>web</module>
         <module>dba</module>
+        <module>management</module>
     </modules>
     <properties>
         <spring.version>4.2.4.RELEASE</spring.version>
