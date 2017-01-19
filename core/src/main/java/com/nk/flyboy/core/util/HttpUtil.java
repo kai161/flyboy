@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,9 +81,10 @@ public class HttpUtil {
         return content;
     }
 
-    public static String htmlParser(String htmlContent){
+    public static String htmlParser(String url) throws IOException {
         String parserContent=null;
 
+        Document document=Jsoup.connect(url).get();
 
 
         return parserContent;
