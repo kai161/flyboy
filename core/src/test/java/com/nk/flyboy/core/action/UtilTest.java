@@ -2,9 +2,15 @@ package com.nk.flyboy.core.action;
 
 import com.nk.flyboy.core.util.HttpUtil;
 import com.nk.flyboy.core.util.JVMUtil;
+import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kai on 2017/1/18.
@@ -26,10 +32,13 @@ public class UtilTest {
     @Test
     public void getHtml(){
         try {
-            String s1=HttpUtil.get("https://item.jd.com/3597673.html");
-            String s= HttpUtil.htmlParser("https://item.jd.com/3597673.html");
+            String s1=HttpUtil.get("https://my.oschina.net/lonelydawn/blog/827615");
+            Document s= HttpUtil.htmlParser("https://my.oschina.net/lonelydawn/blog/827615");
+            URL netUrl=new URL("https://my.oschina.net/lonelydawn/blog/827615");
+            String demoinURL=netUrl.getHost();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
