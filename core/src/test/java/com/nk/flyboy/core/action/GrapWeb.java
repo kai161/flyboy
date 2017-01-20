@@ -88,6 +88,10 @@ public class GrapWeb {
             }
         }
     }
+
+    /**
+     * 解析URL对应的页面进行保存，并提取出页面中所有的链接
+     */
     public void pareseHtml(String url) throws IOException {
         Document document= HttpUtil.htmlParser(url);
         if(document==null) return;
