@@ -81,10 +81,13 @@ public class HttpUtil {
         return content;
     }
 
+    /**
+     * 解析HTML页面，添加请求头防403
+     */
     public static String htmlParser(String url) throws IOException {
         String parserContent=null;
 
-        Document document=Jsoup.connect(url).get();
+        Document document=Jsoup.connect(url).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
 
 
         return parserContent;
