@@ -6,8 +6,13 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by kai on 2017/2/5.
  */
-public class SecureUtil {
+public class SecurityUtil {
 
+    /**
+     * 简单MD5加密
+     * @param strToHash
+     * @return
+     */
     public static String MD5(String strToHash){
 
         String md5=null;
