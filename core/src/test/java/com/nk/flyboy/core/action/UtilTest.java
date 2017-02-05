@@ -33,8 +33,8 @@ public class UtilTest {
     public void getHtml(){
         try {
             String s1=HttpUtil.get("https://my.oschina.net/lonelydawn/blog/827615");
-            Document s= HttpUtil.htmlParser("https://my.oschina.net/lonelydawn/blog/827615");
-            URL netUrl=new URL("https://my.oschina.net/lonelydawn/blog/827615");
+            Document s= HttpUtil.htmlParser("https://www.souyidai.com/myaccount/capital");
+            URL netUrl=new URL("https://www.souyidai.com/myaccount/capital");
             String demoinURL=netUrl.getHost();
         } catch (IOException e) {
             e.printStackTrace();

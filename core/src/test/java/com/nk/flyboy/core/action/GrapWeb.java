@@ -9,17 +9,19 @@ import org.springframework.util.StringUtils;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
  * Created by kai on 2017/1/20.
  */
 public class GrapWeb {
+
+    //用set做容器存储URL地址可以避免在保存到waitList时判断是否有已有URL保存
     static List<String> usedList=new CopyOnWriteArrayList<>();
     static List<String> waitList=new CopyOnWriteArrayList<String>();
+    //static Set<String> usedList=new CopyOnWriteArraySet<>();
+    //static Set<String> waitList=new CopyOnWriteArraySet<String>();
     static String savePath;
     static CountDownLatch downLatch=new CountDownLatch(10);
 
@@ -36,13 +38,14 @@ public class GrapWeb {
         long startTime= System.currentTimeMillis();
         for(int i=0;i<10;i++){
 
+            //DealRunnable dealRunnable=new DealRunnable();
             new Thread(dealRunnable,"thread-"+i).start();
         }
         downLatch.await();
         long endTime= System.currentTimeMillis();
         long usedTime=(endTime-startTime)/1000;
         System.out.println("----------end work, use time : "+usedTime+"---------");
-
+        System.out.println("usedList size :"+usedList.size());
 
     }
 
