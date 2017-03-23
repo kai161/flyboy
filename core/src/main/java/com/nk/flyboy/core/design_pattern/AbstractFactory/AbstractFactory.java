@@ -1,4 +1,4 @@
-package com.nk.flyboy.core.design_pattern.AbstractFactory;
+package com.nk.flyboy.core.design_pattern.abstractfactory;
 
 /**
  * Created on 2017/3/22.
