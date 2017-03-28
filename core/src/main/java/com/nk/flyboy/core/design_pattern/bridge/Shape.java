@@ -1,4 +1,4 @@
-package com.nk.flyboy.core.design_pattern.Bridge;
+package com.nk.flyboy.core.design_pattern.bridge;
 
 /**
  * Created on 2017/3/23.
