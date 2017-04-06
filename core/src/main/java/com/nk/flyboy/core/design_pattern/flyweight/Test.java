@@ -25,7 +25,7 @@ public class Test {
     }
 
     private static String getRandomColor(){
-       return colors[(int)Math.random()*colors.length];
+       return colors[(int)(Math.random()*colors.length)];
     }
 
     private static int getRandomX(){
