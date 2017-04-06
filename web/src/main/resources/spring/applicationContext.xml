@@ -70,5 +70,40 @@
        <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
               <property name="configLocation" value="classpath:ehcache.xml"></property>
        </bean>
+       <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration" >
+              <property name="master">
+                     <bean class="org.springframework.data.redis.connection.RedisNode">
+                            <property name="name" value="mymaster"></property>
+                     </bean>
+              </property>
+              <property name="sentinels">
+                     <set>
+                            <bean class="org.springframework.data.redis.connection.RedisNode">
+                                   <constructor-arg index="0" value="192.168.177.130"></constructor-arg>
+                                   <constructor-arg index="1" value="26370"></constructor-arg>
+                            </bean>
+                            <bean class="org.springframework.data.redis.connection.RedisNode">
+                                   <constructor-arg index="0" value="192.168.177.130"></constructor-arg>
+                                   <constructor-arg index="1" value="26380"></constructor-arg>
+                            </bean>
+                            <bean class="org.springframework.data.redis.connection.RedisNode">
+                                   <constructor-arg index="0" value="192.168.177.130"></constructor-arg>
+                                   <constructor-arg index="1" value="26390"></constructor-arg>
+                            </bean>
+                     </set>
+              </property>
+       </bean>
+
+       <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+              <!--没有配置jedisPool时一定要添加该属性-->
+              <property name="usePool" value="false"></property>
+              <property name="hostName" value="192.168.177.130"></property>
+              <property name="port" value="6390"></property>
+              <property name="timeout" value="12000"></property>
+              <constructor-arg ref="redisSentinelConfiguration"></constructor-arg>
+       </bean>
+       <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+              <constructor-arg name="connectionFactory" ref="jedisConnFactory"></constructor-arg>
+       </bean>
 
 </beans>

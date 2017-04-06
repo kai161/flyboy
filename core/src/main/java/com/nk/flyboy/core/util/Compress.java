@@ -13,15 +13,15 @@ import java.util.zip.*;
 
 /**
  * Created by kai on 2017/1/3.
- * deflate¡¢gzipºÍbzip2¸ü¹Ø×¢Ñ¹ËõÂÊ£¬Ñ¹ËõºÍ½âÑ¹ËõÊ±¼ä»á¸ü³¤£»
- * lzo£¬lz4ÒÔ¼°snappyÕâ3ÖĞÑ¹ËõËã·¨£¬¾ùÒÑÑ¹ËõËÙ¶ÈÎªÓÅÏÈ£¬Ñ¹ËõÂÊ»áÉÔÑ·Ò»³ï£»
- * lzo£¬lz4ÒÔ¼°snappyÔÚcpu¸ß·å¸üµÍÒ»µã¡£ÒòÎªÔÚÈİÈÌµÄÑ¹ËõÂÊÖ®ÄÚ£¬ÎÒÃÇ¸ü¼Ó¹Ø×¢Ñ¹ËõºÍ½âÑ¹ËõÊ±¼ä£¬ÒÔ¼°cpuÊ¹ÓÃ£¬
- * snappyÔÚÑ¹ËõºÍ½âÑ¹ËõÊ±¼äÒÔ¼°cpu¸ß·å¶¼ÊÇ×îµÍµÄ£¬²¢ÇÒÔÚÑ¹Á¦ÂÊÉÏÒ²Ã»ÓĞÌ«¶àµÄÁÓÊÆ¡£
+ * deflateã€gzipå’Œbzip2æ›´å…³æ³¨å‹ç¼©ç‡ï¼Œå‹ç¼©å’Œè§£å‹ç¼©æ—¶é—´ä¼šæ›´é•¿ï¼›
+ * lzoï¼Œlz4ä»¥åŠsnappyè¿™3ä¸­å‹ç¼©ç®—æ³•ï¼Œå‡å·²å‹ç¼©é€Ÿåº¦ä¸ºä¼˜å…ˆï¼Œå‹ç¼©ç‡ä¼šç¨é€Šä¸€ç­¹ï¼›
+ * lzoï¼Œlz4ä»¥åŠsnappyåœ¨cpué«˜å³°æ›´ä½ä¸€ç‚¹ã€‚å› ä¸ºåœ¨å®¹å¿çš„å‹ç¼©ç‡ä¹‹å†…ï¼Œæˆ‘ä»¬æ›´åŠ å…³æ³¨å‹ç¼©å’Œè§£å‹ç¼©æ—¶é—´ï¼Œä»¥åŠcpuä½¿ç”¨ï¼Œ
+ * snappyåœ¨å‹ç¼©å’Œè§£å‹ç¼©æ—¶é—´ä»¥åŠcpué«˜å³°éƒ½æ˜¯æœ€ä½çš„ï¼Œå¹¶ä¸”åœ¨å‹åŠ›ç‡ä¸Šä¹Ÿæ²¡æœ‰å¤ªå¤šçš„åŠ£åŠ¿ã€‚
  */
 public class Compress {
 
     /**
-     * ÎŞËğÑ¹Ëõ
+     * æ— æŸå‹ç¼©
      */
     public byte[] deflateCompress(byte[] source){
         ByteArrayOutputStream bos=new ByteArrayOutputStream();
@@ -130,7 +130,7 @@ public class Compress {
 
 
     /**
-     * ÎŞËğÑ¹Ëõ
+     * æ— æŸå‹ç¼©
      */
     public byte[] lzoCompress(byte[] source){
         ByteArrayOutputStream bos=new ByteArrayOutputStream();
@@ -168,7 +168,7 @@ public class Compress {
     }
 
     /**
-     * ÎŞËğÑ¹Ëõ
+     * æ— æŸå‹ç¼©
      */
     public byte[] lz4Compress(byte[] source){
         ByteArrayOutputStream bos=new ByteArrayOutputStream();

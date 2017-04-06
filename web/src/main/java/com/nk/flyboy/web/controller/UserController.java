@@ -1,6 +1,7 @@
 package com.nk.flyboy.web.controller;
 
 import com.nk.flyboy.core.action.user.UserInfoAction;
+import com.nk.flyboy.core.service.redis.queue.Product;
 import com.nk.flyboy.model.Member;
 import com.nk.flyboy.web.annotation.SqlFilter;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class UserController {
 
     @Resource
     private UserInfoAction userInfoAction;
+    @Resource
+    private Product product;
+
 
     @SqlFilter
     @RequestMapping(value = "/userinfo")
@@ -31,13 +35,14 @@ public class UserController {
 
         logger.info("logger for controller");
 
-/*        model.addAttribute("name", "xiaoming");
-        model.addAttribute("age", 18);
-        model.addAttribute("addr", "beijin china");*/
-
         List<Member> list=userInfoAction.execute();
         model.addAttribute("list",list);
+
+
+        product.setKey();
+
         return "userInfo";
+
     }
 
 }

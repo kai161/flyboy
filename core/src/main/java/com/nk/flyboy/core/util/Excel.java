@@ -212,7 +212,7 @@ public class Excel{
 
             private boolean firstCellOfRow=false;
 
-            //用于判断当前行是否有cell
+            //鐢ㄤ簬鍒ゆ柇褰撳墠琛屾槸鍚︽湁cell
             private boolean hasCell=false;
             private int currentRow=-1;
             private int currentCol=-1;

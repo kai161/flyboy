@@ -6,12 +6,12 @@
         </encoder>
     </appender>
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>/home/alpaca/logs/flyboy.log</File>
+        <File>/Users/kai/logs/flyboylogs/flyboy.log</File>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>TRACE</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/alpaca/logs/flyboy.%d{yyyy-MM-dd}.log
+            <fileNamePattern>/Users/kai/logs/flyboylogs/flyboy.%d{yyyy-MM-dd}.log
             </fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
