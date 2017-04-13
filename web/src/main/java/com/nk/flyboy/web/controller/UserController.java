@@ -2,6 +2,7 @@ package com.nk.flyboy.web.controller;
 
 import com.nk.flyboy.core.action.user.UserInfoAction;
 import com.nk.flyboy.core.service.redis.queue.Product;
+import com.nk.flyboy.core.util.IDGenerator;
 import com.nk.flyboy.model.Member;
 import com.nk.flyboy.web.annotation.SqlFilter;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,6 +45,12 @@ public class UserController {
 
         return "userInfo";
 
+    }
+
+    @RequestMapping(value = "/id")
+    @ResponseBody
+    public Long getId(){
+       return IDGenerator.generateId();
     }
 
 }

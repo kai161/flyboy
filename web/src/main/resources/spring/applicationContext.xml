@@ -17,7 +17,13 @@
        ">
 
        <context:component-scan base-package="com.nk.flyboy"></context:component-scan>
-       <mvc:annotation-driven />
+       <mvc:annotation-driven>
+           <!--responsebody 支持多种返回类型-->
+           <mvc:message-converters>
+               <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+               <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+           </mvc:message-converters>
+       </mvc:annotation-driven>
 
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
               <property name="prefix" value="/WEB-INF/views/"></property>
