@@ -130,8 +130,8 @@ public class LogManager extends Thread {
 
     public void flush(){
         if(logFileItems.size()>0){
-            Set<Map.Entry<String,LogFileItem>> entries=logFileItems.entrySet();
-            /*for(Map.Entry<String,LogFileItem> itemEntry:entries){
+            /*Set<Map.Entry<String,LogFileItem>> entries=logFileItems.entrySet();
+            for(Map.Entry<String,LogFileItem> itemEntry:entries){
                 createFile(itemEntry.getValue());
                 writeToFile(itemEntry.getValue());
             }*/
