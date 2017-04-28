@@ -106,7 +106,7 @@
               <property name="hostName" value="192.168.177.130"></property>
               <property name="port" value="6390"></property>
               <property name="timeout" value="12000"></property>
-              <constructor-arg ref="redisSentinelConfiguration"></constructor-arg>
+              <!--<constructor-arg ref="redisSentinelConfiguration"></constructor-arg>-->
        </bean>
        <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
               <constructor-arg name="connectionFactory" ref="jedisConnFactory"></constructor-arg>

@@ -6,8 +6,8 @@ package com.nk.flyboy.core.service.redis.queue.pro_con;
 public class TestMain {
 
     public static void main(String[] args) throws InterruptedException {
-        String host="192.168.177.130";
-        int port=6390;
+        String host="172.16.184.128";
+        int port=6379;
         String queueKey="queueTest";
         String queueKey1="queueTest1";
 
