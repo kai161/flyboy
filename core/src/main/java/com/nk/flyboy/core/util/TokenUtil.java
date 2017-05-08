@@ -21,7 +21,7 @@ import java.util.Base64;
  */
 public class TokenUtil {
 
-    private static String key="dsebrgos5lae2jvhoq";
+    private static String KEY="dsebrgos5lae2jvhoq";
     private static String DEFAULT_HEADER="{typ:jwt,alg:HS256}";
 
     private static String getDefaultPayload(){
@@ -69,7 +69,7 @@ public class TokenUtil {
     }
 
     protected static byte[] sign(String signStr){
-        return HmacUtil.encodeHmacSHA256(signStr.getBytes(),key.getBytes());
+        return HmacUtil.encodeHmacSHA256(signStr.getBytes(), KEY.getBytes());
     }
 
     private static String getHeader(String header) {
