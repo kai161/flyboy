@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 
 /**
  * Created by kai on 2017/1/5.
- * 基于java的配置，方法名将作为bean的ID
+ * 鍩轰簬java鐨勯厤缃紝鏂规硶鍚嶅皢浣滀负bean鐨処D
  */
 @Configuration
 @EnableAutoConfiguration()
