@@ -1,5 +1,6 @@
 package com.nk.flyboy.core.service.file;
 
+import java.lang.management.ManagementFactory;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,5 +37,9 @@ public class Test {
         SubClass[] subClasses=new SubClass[10];
 
         System.out.println();
+
+        String pid= ManagementFactory.getRuntimeMXBean().getName();
+
+        System.out.println(pid);
     }
 }
