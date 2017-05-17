@@ -1,6 +1,7 @@
 package com.nk.flyboy.core.service.file;
 
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Proxy;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -34,12 +35,16 @@ public class Test {
         //SuperClass superClass1=new SuperClass();
 
         //SubClass subClass=new SubClass();
-        SubClass[] subClasses=new SubClass[10];
+       /* SubClass[] subClasses=new SubClass[10];
 
         System.out.println();
 
         String pid= ManagementFactory.getRuntimeMXBean().getName();
 
-        System.out.println(pid);
+        System.out.println(pid);*/
+
+        ProxyImplement proxyImplement=new ProxyImplement();
+        ProxyInterface proxy=(ProxyInterface) Proxy.newProxyInstance(ProxyImplement.class.getClassLoader(),new Class[]{ProxyInterface.class},new ProxyHandle(proxyImplement));
+        proxy.sayHello();
     }
 }
