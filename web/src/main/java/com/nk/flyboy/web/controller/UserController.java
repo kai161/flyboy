@@ -1,6 +1,7 @@
 package com.nk.flyboy.web.controller;
 
 import com.nk.flyboy.core.action.user.UserInfoAction;
+import com.nk.flyboy.core.service.RemoteConfig;
 import com.nk.flyboy.core.service.redis.queue.Product;
 import com.nk.flyboy.core.util.IDGenerator;
 import com.nk.flyboy.model.Member;
@@ -29,6 +30,8 @@ public class UserController {
     private UserInfoAction userInfoAction;
     @Resource
     private Product product;
+    @Resource
+    private RemoteConfig remoteConfig;
 
 
     @SqlFilter
@@ -53,4 +56,9 @@ public class UserController {
        return IDGenerator.generateId();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/remoteconf")
+    public String getRemoteConf(){
+        return remoteConfig.toString();
+    }
 }

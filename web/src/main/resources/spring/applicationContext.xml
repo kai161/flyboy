@@ -33,13 +33,13 @@
        <!--静态资源配置-->
        <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>
 
-       <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
               <property name="locations">
                      <list>
                             <value>classpath*:jdbc.properties</value>
                      </list>
               </property>
-       </bean>
+       </bean>-->
 
        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
               <property name="driverClassName" value="${jdbc.driverClassName}"></property>
@@ -112,4 +112,16 @@
               <constructor-arg name="connectionFactory" ref="jedisConnFactory"></constructor-arg>
        </bean>
 
+       <bean class="com.nk.flyboy.core.module.config.RemoteConfigReader">
+              <property name="zookeeperUrl" value="172.16.184.128:2181"></property>
+              <property name="locations" value="classpath*:jdbc.properties"></property>
+       </bean>
+
+       <bean class="com.nk.flyboy.core.service.RemoteConfig">
+              <property name="dataSource" value="${dataSource}"></property>
+              <property name="username" value="${username}"></property>
+              <property name="passsword" value="${password}"></property>
+       </bean>
+
+       <bean class="com.nk.flyboy.core.module.config.WatchRemoteConfig"></bean>
 </beans>

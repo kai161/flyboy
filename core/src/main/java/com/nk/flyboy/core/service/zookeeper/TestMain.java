@@ -19,7 +19,7 @@ public class TestMain {
     public static void main(String[] arg){
         try {
 
-            ZooKeeper zooKeeper=new ZooKeeper("192.168.177.130:2191", 50000, new Watcher() {
+            ZooKeeper zooKeeper=new ZooKeeper("172.16.184.128:2181", 50000, new Watcher() {
                 public void process(WatchedEvent watchedEvent) {
                     if(watchedEvent.getState()== Event.KeeperState.SyncConnected){
                         System.out.println("zookeeper connect ....");
