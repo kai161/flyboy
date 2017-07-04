@@ -5,25 +5,25 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringValueResolver;
-
+import org.springframework.core.io.Resource;
 import java.io.IOException;
 import java.util.Properties;
 
 /**
  * Created on 2017/7/3.
  */
-public class RemoteConfigReader extends PropertyPlaceholderConfigurer {
+public class ConfigReader extends PropertyPlaceholderConfigurer {
 
-    private String zookeeperUrl;
+    private String remoteUrl;
+
+    private Resource[] locationResource;
 
     private String confNode="/config/test2";
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         try {
-            Properties mergedProps = getPropertiesFromRemote();
+            Properties mergedProps = getProperties();
 
             // Convert the merged properties, if necessary.
             convertProperties(mergedProps);
@@ -36,23 +36,57 @@ public class RemoteConfigReader extends PropertyPlaceholderConfigurer {
         }
     }
 
+    public Properties getProperties(){
+        Properties properties=new Properties();
+
+        Properties locationProp=getPropertiesFromLocaltion();
+        if(locationProp.size()>0){
+            properties.putAll(locationProp);
+        }
+
+        Properties remoteProp=getPropertiesFromRemote();
+        if(remoteProp.size()>0){
+            properties.putAll(remoteProp);
+        }
+        return properties;
+    }
+
+    /**
+     * 获取本地配置信息
+     * @return
+     */
+    public Properties getPropertiesFromLocaltion(){
+        Properties properties=new Properties();
+        try {
+            if(locationResource!=null&&locationResource.length>0){
+                setLocations(locationResource);
+            }
+
+            Properties localProperties=mergeProperties();
+            if(localProperties.size()>0){
+                properties.putAll(localProperties);
+
+                for (Resource resource:locationResource){
+                    new Thread(()->{
+                        new WatchLocalConfig(resource).watch();
+                    }).start();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return properties;
+    }
+
     /**
      * 从远程服务器获取配置信息
      * @return
      */
     public Properties getPropertiesFromRemote(){
         Properties properties=new Properties();
-        try {
-            Properties localProperties=mergeProperties();
-            if(localProperties.size()>0){
-                properties.putAll(localProperties);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(zookeeperUrl!=null){
-            byte[] bytes= ZookeeperUtils.getNodeData(zookeeperUrl,confNode);
+        if(remoteUrl!=null){
+            byte[] bytes= ZookeeperUtils.getNodeData(remoteUrl,confNode);
             if(bytes!=null){
                 String props=new String(bytes);
                 String[] propsList=props.split(";");
@@ -67,12 +101,20 @@ public class RemoteConfigReader extends PropertyPlaceholderConfigurer {
         return properties;
     }
 
-    public String getZookeeperUrl() {
-        return zookeeperUrl;
+    public String getRemoteUrl() {
+        return remoteUrl;
     }
 
-    public void setZookeeperUrl(String zookeeperUrl) {
-        this.zookeeperUrl = zookeeperUrl;
+    public void setRemoteUrl(String remoteUrl) {
+        this.remoteUrl = remoteUrl;
+    }
+
+    public Resource[] getLocationResource() {
+        return locationResource;
+    }
+
+    public void setLocationResource(Resource[] locationResource) {
+        this.locationResource = locationResource;
     }
 
     public String getConfNode() {

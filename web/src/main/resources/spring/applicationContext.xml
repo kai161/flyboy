@@ -112,9 +112,9 @@
               <constructor-arg name="connectionFactory" ref="jedisConnFactory"></constructor-arg>
        </bean>
 
-       <bean class="com.nk.flyboy.core.module.config.RemoteConfigReader">
-              <property name="zookeeperUrl" value="172.16.184.128:2181"></property>
-              <property name="locations" value="classpath*:jdbc.properties"></property>
+       <bean class="com.nk.flyboy.core.module.config.ConfigReader">
+              <property name="remoteUrl" value="172.16.184.128:2181"></property>
+              <property name="locationResource" value="classpath*:jdbc.properties"></property>
        </bean>
 
        <bean class="com.nk.flyboy.core.service.RemoteConfig">
