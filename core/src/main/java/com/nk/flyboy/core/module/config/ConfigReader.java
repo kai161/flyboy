@@ -86,7 +86,7 @@ public class ConfigReader extends PropertyPlaceholderConfigurer {
     public Properties getPropertiesFromRemote(){
         Properties properties=new Properties();
         if(remoteUrl!=null){
-            byte[] bytes= ZookeeperUtils.getNodeData(remoteUrl,confNode);
+            byte[] bytes= ZookeeperUtils.getNodeData(remoteUrl,confNode,new WatchRemoteConfig());
             if(bytes!=null){
                 String props=new String(bytes);
                 String[] propsList=props.split(";");

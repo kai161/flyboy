@@ -34,12 +34,12 @@ public class ZookeeperUtils {
         return zooKeeper;
     }
 
-    public static byte[] getNodeData(String url,String nodePath){
+    public static byte[] getNodeData(String url,String nodePath,Watcher watcher){
         byte[] bytes=null;
         ZooKeeper zooKeeper=getZooKeeper(url);
         if(zooKeeper!=null){
             try {
-                bytes=zooKeeper.getData(nodePath,new WatchRemoteConfig(),new Stat());
+                bytes=zooKeeper.getData(nodePath,watcher,new Stat());
             }catch (Exception e){
                 e.printStackTrace();
             }
