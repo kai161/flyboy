@@ -51,7 +51,6 @@ public class ZookeeperUtils {
     }
 
     public static byte[] getNodeAndChildrenData(String url,String nodePath,Watcher watcher){
-        byte[] bytes=null;
         ZooKeeper zooKeeper=getZooKeeper(url);
         if(zooKeeper!=null){
             try {
@@ -63,7 +62,7 @@ public class ZookeeperUtils {
             }
         }
 
-        return bytes;
+        return null;
     }
 
     public static void getNodeAndChildrenDate(ZooKeeper zooKeeper,String nodePath,Watcher watcher,StringBuilder sb) throws KeeperException, InterruptedException {
