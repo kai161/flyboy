@@ -6,6 +6,8 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -86,10 +88,10 @@ public class ConfigReader extends PropertyPlaceholderConfigurer {
     public Properties getPropertiesFromRemote(){
         Properties properties=new Properties();
         if(remoteUrl!=null){
-            byte[] bytes= ZookeeperUtils.getNodeData(remoteUrl,confNode,new WatchRemoteConfig());
+            byte[] bytes= ZookeeperUtils.getNodeAndChildrenData(remoteUrl,confNode,new WatchRemoteConfig());
             if(bytes!=null){
                 String props=new String(bytes);
-                String[] propsList=props.split(";");
+                String[] propsList= StringUtils.tokenizeToStringArray(props,";",true,true);
                 if(propsList.length>0){
                     for (String prop:propsList){
                         String[] keyValues=prop.split("=");
