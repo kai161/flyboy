@@ -1,5 +1,6 @@
 package com.nk.flyboy.core.schedul;
 
+import com.nk.flyboy.core.module.job.annotation.JobDesc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,7 +11,8 @@ import java.time.LocalDateTime;
 /**
  * Created by cheris on 2016/5/26.
  */
-//@Component
+@Component
+@JobDesc(project = "flyboy",name ="testjob",desc = "test job desc")
 public class SchedulTestJob {
 
     private Logger logger= LoggerFactory.getLogger(SchedulTestJob.class);

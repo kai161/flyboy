@@ -123,5 +123,7 @@
               <property name="passsword" value="${password}"></property>
        </bean>
 
-       <bean class="com.nk.flyboy.core.module.config.WatchRemoteConfig"></bean>
+       <bean class="com.nk.flyboy.core.module.job.handle.Register">
+              <property name="zookeeper" value="172.16.184.128:2181" />
+       </bean>
 </beans>
