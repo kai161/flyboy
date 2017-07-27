@@ -1,12 +1,9 @@
 package com.nk.flyboy.dao;
 
 import com.nk.flyboy.dao.mapper.UserInfoMapper;
-import com.nk.flyboy.jdbc.BaseMapper;
 import com.nk.flyboy.model.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

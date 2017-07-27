@@ -1,10 +1,12 @@
 package com.nk.flyboy.web.controller;
 
+import com.nk.flyboy.core.action.user.PrepaymentRecordAction;
 import com.nk.flyboy.core.action.user.UserInfoAction;
 import com.nk.flyboy.core.service.RemoteConfig;
 import com.nk.flyboy.core.service.redis.queue.Product;
 import com.nk.flyboy.core.util.IDGenerator;
 import com.nk.flyboy.model.Member;
+import com.nk.flyboy.model.PrepaymentRecord;
 import com.nk.flyboy.web.annotation.SqlFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +32,12 @@ public class UserController {
     private UserInfoAction userInfoAction;
     @Resource
     private Product product;
-    @Resource
+    /*@Resource
     private RemoteConfig remoteConfig;
+*/
 
+    @Resource
+    private PrepaymentRecordAction prepaymentRecordAction;
 
     @SqlFilter
     @RequestMapping(value = "/userinfo")
@@ -56,9 +61,17 @@ public class UserController {
        return IDGenerator.generateId();
     }
 
-    @ResponseBody
+/*    @ResponseBody
     @RequestMapping(value = "/remoteconf")
     public String getRemoteConf(){
         return remoteConfig.toString();
+    }*/
+
+    @RequestMapping(value = "/prepayments")
+    @ResponseBody
+    public String getPrepaymentList(){
+
+        List<PrepaymentRecord> list=prepaymentRecordAction.execute();
+        return "success";
     }
 }

@@ -1,5 +1,6 @@
 package com.nk.flyboy.core.service;
 
+import com.nk.flyboy.dao.PrepaymentRecordDao;
 import com.nk.flyboy.dao.UserInfoDao;
 import com.nk.flyboy.model.Member;
 import org.springframework.cache.Cache;
@@ -20,6 +21,8 @@ public class UserInfoService {
     private UserInfoDao userInfoDao;
     @Resource
     private CacheManager cacheManager;
+    @Resource
+    private PrepaymentRecordDao prepaymentRecordDao;
 
     public List<Member> getMemberList(){
         Cache cache=cacheManager.getCache("myCache");
