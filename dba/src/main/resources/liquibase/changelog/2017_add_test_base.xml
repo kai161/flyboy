@@ -11,7 +11,7 @@
     <!--
          课程章节表
     -->
-    <changeSet id="20170109" author="test">
+    <changeSet id="20170709" author="test">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="DLEDU_CHAPTER"/>
