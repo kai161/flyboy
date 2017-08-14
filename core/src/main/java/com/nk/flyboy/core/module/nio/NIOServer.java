@@ -81,6 +81,8 @@ public class NIOServer {
                     //否则 client段socket关闭时，selector会一直select到这个key，并执行最后的操作，到时对通道读写就会报异常了。
                     key.cancel();
 
+                    //关闭socket 否则会出现 Too many open files in system 的异常
+                    socketChannel.close();
                 }
 
             }
