@@ -17,6 +17,7 @@
        ">
 
        <context:component-scan base-package="com.nk.flyboy"></context:component-scan>
+       <context:annotation-config />
        <mvc:annotation-driven>
            <!--responsebody 支持多种返回类型-->
            <mvc:message-converters>
@@ -32,6 +33,7 @@
 
        <!--静态资源配置-->
        <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>
+       <mvc:resources mapping="/login.html" location="/login.html"></mvc:resources>
 
        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
               <property name="locations">
@@ -65,7 +67,10 @@
 
        <!--添加过滤器-->
        <mvc:interceptors>
-              <bean class="com.nk.flyboy.web.interceptor.SqlFilterInterceptor"></bean>
+              <mvc:interceptor>
+                     <mvc:mapping path="/user/**"/>
+                     <bean class="com.nk.flyboy.web.interceptor.SqlFilterInterceptor"></bean>
+              </mvc:interceptor>
        </mvc:interceptors>
 
        <!--配置Spring-EhCache-->
@@ -128,4 +133,6 @@
        <!--</bean>-->
 
        <bean id="traceController" class="com.kai.flytrace.controller.TraceControllerBean"></bean>
+
+       <import resource="shiroConfig.xml"/>
 </beans>
