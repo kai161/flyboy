@@ -1,5 +1,6 @@
 package com.nk.flyboy.core.action.user;
 
+import com.nk.flyboy.core.util.RetryProxy;
 import com.nk.flyboy.dao.PrepaymentRecordDao;
 import com.nk.flyboy.model.Member;
 import com.nk.flyboy.model.PrepaymentRecord;
