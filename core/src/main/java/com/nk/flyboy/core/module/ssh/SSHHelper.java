@@ -51,6 +51,20 @@ public class SSHHelper {
         return new String(bytes1,0,len);
     }
 
+    //ssh指令
+    public static void ssh(Session session) throws JSchException, IOException {
+
+        ChannelShell channel=(ChannelShell) session.openChannel("shell");
+
+        channel.setInputStream(System.in);
+
+        channel.setOutputStream(System.out);
+
+        channel.connect(2*1000);
+
+        System.out.println("exit");
+    }
+
 
 
 

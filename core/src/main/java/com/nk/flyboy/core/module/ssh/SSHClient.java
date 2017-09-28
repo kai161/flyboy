@@ -11,9 +11,9 @@ import java.io.IOException;
 public class SSHClient {
 
     public static void main(String[] args) throws JSchException, IOException {
-        String username="kai1";
-        String ip="172.16.184.128";
-        Session session=SSHHelper.connect(ip,22,username,"1");
+        String username="root";
+        String ip="192.168.50.183";
+        Session session=SSHHelper.connect(ip,22,username,"123123");
 
         Runtime.getRuntime().addShutdownHook(new Thread(()->{
             System.out.println("disconnect");
@@ -29,6 +29,10 @@ public class SSHClient {
 
         System.out.println(result1);
 
+
+        SSHHelper.ssh(session);
+
+        System.out.println("main exit");
 
 
 
