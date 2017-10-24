@@ -1,5 +1,7 @@
 package com.nk.flyboy.dba.controller;
 
+import com.nk.flyboy.dba.test.UserAuto1;
+import com.nk.flyboy.dba.test.UserAuto2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,12 @@ public class LiquibaseController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private UserAuto1 userAuto1;
+
+    @Autowired
+    private UserAuto2 userAuto2;
+
     @RequestMapping("/welcome")
     public String welcome(){
         return "welcome";
@@ -41,5 +49,13 @@ public class LiquibaseController {
         return  "success";
     }
 
+    @RequestMapping("/testSmart")
+    public String testSmart(){
+        userAuto1.userAuto1();
+
+        userAuto2.userAuto2();
+
+        return "success";
+    }
 
 }

@@ -1,24 +1,23 @@
 package com.nk.flyboy.dba.config;
 
 import com.nk.flyboy.dba.interceptor.AuthInterceptor;
+import com.nk.flyboy.dba.test.AutoAnnotation;
 import liquibase.integration.spring.SpringLiquibase;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -70,5 +69,18 @@ public class BeanConfig {
         return liquibase;
     }
 
+    @Autowired
+    private List<AutoAnnotation> autoAnnotationList= Collections.emptyList();
+
+    @Bean
+    public SmartInitializingSingleton smartInitializingSingleton(){
+        return new SmartInitializingSingleton() {
+            public void afterSingletonsInstantiated() {
+                for (AutoAnnotation autoAnnotation:autoAnnotationList){
+                    autoAnnotation.info="user smarter";
+                }
+            }
+        };
+    }
 
 }
