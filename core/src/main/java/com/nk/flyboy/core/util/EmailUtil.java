@@ -1,6 +1,5 @@
 package com.nk.flyboy.core.util;
 
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -15,7 +14,8 @@ public class EmailUtil {
     public static boolean sendEmail(String subject, String text,String toEmail) throws MessagingException {
 
         JavaMailSenderImpl javaMailSender=new JavaMailSenderImpl();
-        javaMailSender.setHost("");
+        javaMailSender.setHost("smtp.126.com");
+        javaMailSender.setPort(25);
 
 
         MimeMessage MimeMessage= javaMailSender.createMimeMessage();
