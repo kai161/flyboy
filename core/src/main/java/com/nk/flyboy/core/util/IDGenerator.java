@@ -4,13 +4,14 @@ import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created on 2017/4/11.
  */
 public class IDGenerator {
 
-    private static long sequence=0L;
+    private static AtomicInteger sequence=new AtomicInteger(0);
     private static long lastTimeStamp=-1L;
     private static long machineId=0L;
 
@@ -36,21 +37,21 @@ public class IDGenerator {
             long timestamp=System.currentTimeMillis();
 
             if(timestamp==lastTimeStamp){
-                sequence=(sequence+1L)&4095;
-                if(sequence==0){
+                int size=sequence.incrementAndGet()&4095;
+                if(size==0){
                     for(timestamp=System.currentTimeMillis();timestamp<=lastTimeStamp;timestamp=System.currentTimeMillis()){
                         ;
                     }
                 }
             }else {
-                sequence=0L;
+                sequence.set(0);
             }
 
             if(timestamp<lastTimeStamp){
                 return 0;
             }else {
                 lastTimeStamp=timestamp;
-                return machineId<<53|(timestamp-1412092800000L)<<12|sequence;
+                return machineId<<53|(timestamp-1412092800000L)<<12|sequence.get();
             }
         }
 
