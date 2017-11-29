@@ -1,6 +1,5 @@
 package com.nk.flyboy.core.service.redis.lock;
 
-import com.sun.org.apache.xml.internal.security.Init;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

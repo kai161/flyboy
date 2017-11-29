@@ -1,8 +1,7 @@
 package com.nk.flyboy.core.util;
 
 import com.sun.java.util.jar.pack.*;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
@@ -22,14 +21,13 @@ import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -312,6 +310,181 @@ public class Excel{
             return list;
         }
 
+
+        }
+
+
+    public static<T> void exportExcelXLS(String title, List<T> list, OutputStream out) {
+        // 声明一个工作薄
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        // 生成一个表格
+        HSSFSheet sheet = workbook.createSheet(title);
+        // 设置表格默认列宽度为15个字节
+        sheet.setDefaultColumnWidth((short) 30);
+
+        // 遍历集合数据，产生数据行
+        Iterator<T> it = list.iterator();
+        Field[] fields=null;
+        int index = 0;
+        while (it.hasNext()) {
+            T t = (T) it.next();
+
+            if(index==0){
+                // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
+                fields = t.getClass().getDeclaredFields();
+
+                // 产生表格标题行
+                HSSFRow headerRow = sheet.createRow(0);
+                for (short i = 0; i < fields.length; i++) {
+                    HSSFCell cell = headerRow.createCell(i);
+                    HSSFRichTextString text = new HSSFRichTextString(fields[i].getName());
+                    cell.setCellValue(text);
+                }
+            }
+            index++;
+            HSSFRow row = sheet.createRow(index);
+
+            for (short i = 0; i < fields.length; i++) {
+                HSSFCell cell = row.createCell(i);
+                Field field = fields[i];
+                String fieldName = field.getName();
+                String getMethodName = "get"
+                        + fieldName.substring(0, 1).toUpperCase()
+                        + fieldName.substring(1);
+                try {
+                    Class tCls = t.getClass();
+                    Method getMethod = tCls.getMethod(getMethodName,new Class[]{});
+                    Object value = getMethod.invoke(t, new Object[]{});
+                    String textValue = null;
+
+                    if (value instanceof Date)
+                    {
+                        Date date = (Date) value;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        textValue = sdf.format(date);
+                    }else {
+                        textValue= value.toString();
+                    }
+
+                    if(textValue!=null){
+                        HSSFRichTextString richString = new HSSFRichTextString(textValue);
+                        cell.setCellValue(richString);
+                    }
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 清理资源
+                }
+            }
+        }
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static Workbook getWorkBook(String postfix){
+        if(EXCEL_2003_POSTFIX.equals(postfix)){
+            return new HSSFWorkbook();
+        }
+        if(EXCEL_2010_POSTFIX.equals(postfix)){
+            return new XSSFWorkbook();
+        }
+
+        return new HSSFWorkbook();
+    }
+    public static<T> void exportExcel(String title, List<T> list,String postfix,OutputStream out) {
+        // 声明一个工作薄
+        Workbook workbook = getWorkBook(postfix);
+        // 生成一个表格
+        Sheet sheet = workbook.createSheet(title);
+        // 设置表格默认列宽度为15个字节
+        sheet.setDefaultColumnWidth((short) 30);
+
+        // 遍历集合数据，产生数据行
+        Iterator<T> it = list.iterator();
+        Field[] fields=null;
+        int index = 0;
+        while (it.hasNext()) {
+            T t = (T) it.next();
+
+            if(index==0){
+                // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
+                fields = t.getClass().getDeclaredFields();
+
+                // 产生表格标题行
+                Row headerRow = sheet.createRow(0);
+                for (short i = 0; i < fields.length; i++) {
+                    Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(fields[i].getName());
+                }
+            }
+            index++;
+            Row row = sheet.createRow(index);
+
+            for (short i = 0; i < fields.length; i++) {
+                Cell cell = row.createCell(i);
+                Field field = fields[i];
+                String fieldName = field.getName();
+                String getMethodName = "get"
+                        + fieldName.substring(0, 1).toUpperCase()
+                        + fieldName.substring(1);
+                try {
+                    Class tCls = t.getClass();
+                    Method getMethod = tCls.getMethod(getMethodName,new Class[]{});
+                    Object value = getMethod.invoke(t, new Object[]{});
+                    String textValue = null;
+
+                    if (value instanceof Date)
+                    {
+                        Date date = (Date) value;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        textValue = sdf.format(date);
+                    }else {
+                        textValue= value.toString();
+                    }
+
+                    if(textValue!=null){
+                        cell.setCellValue(textValue);
+                    }
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 清理资源
+                }
+            }
+        }
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
