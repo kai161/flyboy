@@ -410,6 +410,49 @@ public class Excel{
     public static<T> void exportExcel(String title, List<T> list,String postfix,OutputStream out) {
         // 声明一个工作薄
         Workbook workbook = getWorkBook(postfix);
+
+        createNewSheet(workbook,title,list);
+
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static<T> void exportExcelWithManySheet(HashMap<String,List<T>> hashMap,String postfix,OutputStream out) {
+        // 声明一个工作薄
+        Workbook workbook = getWorkBook(postfix);
+
+        if (hashMap!=null&&hashMap.size()>0){
+            for(Map.Entry<String,List<T>> entry:hashMap.entrySet()){
+                if(entry.getValue()==null||entry.getValue().size()<=0){
+                    continue;
+                }
+                createNewSheet(workbook, entry.getKey(),entry.getValue());
+            }
+        }
+
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                workbook.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static <T> void createNewSheet(Workbook workbook, String title,List<T> list) {
         // 生成一个表格
         Sheet sheet = workbook.createSheet(title);
         // 设置表格默认列宽度为15个字节
@@ -472,17 +515,6 @@ public class Excel{
                 } finally {
                     // 清理资源
                 }
-            }
-        }
-        try {
-            workbook.write(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                workbook.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

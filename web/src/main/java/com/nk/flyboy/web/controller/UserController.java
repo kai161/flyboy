@@ -26,6 +26,7 @@ import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,15 +69,21 @@ public class UserController {
 
     @RequestMapping("/exportExcel/{title}/{postfix}")
     public void exportExcel(@PathVariable String title,@PathVariable String postfix, HttpServletResponse response){
-        List<ExcelModel> list=new ArrayList<ExcelModel>();
+        HashMap<String,List<ExcelModel>> hashMap=new HashMap<String, List<ExcelModel>>();
+        for (int j=0;j<5;j++){
+            List<ExcelModel> list=new ArrayList<ExcelModel>();
 
-        ExcelModel model=null;
-        for(int i=0;i<10;i++){
-            model=new ExcelModel();
-            model.setActiveName("active_"+i);
-            model.setTime(System.currentTimeMillis());
-            model.setCount(i);
-            list.add(model);
+            ExcelModel model=null;
+            for(int i=0;i<10;i++){
+                model=new ExcelModel();
+                model.setActiveName("active_"+j+i);
+                model.setTime(System.currentTimeMillis());
+                model.setCount(i);
+                list.add(model);
+            }
+
+            hashMap.put("中文不支持"+j,list);
+
         }
 
 
@@ -97,7 +104,8 @@ public class UserController {
 
         try {
             OutputStream outputStream=response.getOutputStream();
-            Excel.exportExcel(title,list,filePostfix,outputStream);
+            //Excel.exportExcel(title,list,filePostfix,outputStream);
+            Excel.exportExcelWithManySheet(hashMap,filePostfix,outputStream);
             response.flushBuffer();
         } catch (IOException e) {
             e.printStackTrace();
